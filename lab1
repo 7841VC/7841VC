@@ -1,0 +1,27 @@
+#include "pch.h"
+#include <iostream> 
+
+
+int main(void)
+{
+		float V; // объем бассейна 
+		float v1; // скорость вытекания
+		float v2; // скорость поступления
+		float t; // время
+
+		printf("V = ");
+		scanf_s("%f", &V);
+	
+		printf("v1 = ");
+		scanf_s("%f", &v1);
+
+		printf("v2 = ");
+		scanf_s("%f", &v2);
+		
+
+		t = V / (v1 - v2);
+			
+		printf("time = %f\n", V);
+		
+		return 0;
+	} 
