@@ -1,6 +1,4 @@
-#include "pch.h"
-#include <iostream> 
-
+#include <stdio.h>
 
 int main(void)
 {
@@ -22,6 +20,8 @@ int main(void)
 		t = V / (v1 - v2);
 			
 		printf("time = %f\n", V);
+		
+			getch();
 		
 		return 0;
 	} 
