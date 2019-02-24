@@ -21,7 +21,7 @@ int main(void)
 			
 		printf("time = %f\n", V);
 		
-			getch();
+		getch();
 		
 		return 0;
 	} 
