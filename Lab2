@@ -1,0 +1,30 @@
+#include <iostream>
+
+int main(void)
+{
+	float s; // сумма ряда
+	float a; // очередной элемент ряда
+	float x; // входной параметр ряда
+
+	int n; // число элементов ряда
+	
+	printf("n=");
+	scanf_s("%d", &n);
+
+	
+	a = 1;
+	x = 1;
+	s = 0;
+	
+	for (int i = 0; i < n; i++)
+
+	{
+		a *= i * 2 + 1;
+		x *= i * 3 + 1;
+		s += a / x;
+	}
+
+	printf("s = %f\n", s);
+
+	return 0;
+}
