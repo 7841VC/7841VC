@@ -23,7 +23,6 @@ int main(void)
 		x *= i * 3 + 1;
 		s += a / x;
 	}
-
 	printf("s = %f\n", s);
 
 	return 0;
