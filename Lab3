@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
 #include <sstream> 
+
 using namespace std;
  
 int main()
+
 {
     string s, word;
     cout << "String:\n";
@@ -11,14 +13,19 @@ int main()
     
     stringstream words(s);
     words >> word;
+    
     size_t size=word.size(), k=0;
     while (words >> word)
+    
     {
         if(word.size()!=size) {k=1; break;}        
     }
     
     if(!k) cout << "YES\n"; 
     else cout << "NO\n";
+    
 system("pause");
+
 return 0;
+
 }
