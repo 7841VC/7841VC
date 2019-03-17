@@ -1,31 +1,59 @@
-#include <iostream>
-#include <string>
-#include <sstream> 
+#include <stdio.h>
 
-using namespace std;
- 
-int main()
+#define TRUE 1
+#define FALSE 0
 
+int main(void)
 {
-    string s, word;
-    cout << "String:\n";
-    getline(cin, s);
-    
-    stringstream words(s);
-    words >> word;
-    
-    size_t size=word.size(), k=0;
-    while (words >> word)
-    
-    {
-        if(word.size()!=size) {k=1; break;}        
-    }
-    
-    if(!k) cout << "YES\n"; 
-    else cout << "NO\n";
-    
-system("pause");
+	char c, flag = FALSE, flag1 = FALSE, found = FALSE;
+	int  i = 0, n = 0;
 
-return 0;
+	while ((c = getchar()) != EOF)		//пока не будет нажато сочетание Ctrl+z в новой строке, то есть после нажатия на Enter
+	{
+		if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z')	//проверка является ли символ буквой
+		{
+			if (flag1 == FALSE)		//если это первое слово в потоке
+			{
+				n++;			//количество букв в первом слове
+				flag = TRUE;	//признак нахождения внутри слова
+			}
+			else	//если не первое слово в потоке
+			{
+				i++;			//количество букв в последующем слове
+				flag = TRUE;
+			}
+		}
+		else	//если символ не буква
+		{
+			if (flag == TRUE)	//если только что были внутри слова
+			{
+				if (flag1 == FALSE)		//если это было первое слово
+				{
+					flag1 = TRUE;		//признак прохождения первого слова
+				}
+				else	//если не первое слово
+				{
+					if (n != i)		//если количество букв в первом и последующем словах разное
+					{
+						found = TRUE;	//признак неодинаковых слов
+					}
+				}
+			}
 
+			flag = FALSE;
+			i = 0;
+		}
+	}
+	
+	if (found == TRUE)		//если хотя бы одно слово было отличной от других слов длинны
+	{
+		printf("Words are not the same lenght\n");	//вывод:"слова не одинаковой длинны"
+	}
+	else		//если все слова были одинаковой длинны
+	{
+		printf("Words of the same lenght\n");	//вывод:"слова одинаковой длинны"
+	}
+
+	system("pause");
+	return 0;
 }
