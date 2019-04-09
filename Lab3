@@ -1,41 +1,38 @@
 #include <stdio.h>
-
 #define TRUE 1
 #define FALSE 0
-
 int main(void)
 {
 	char c, flag = FALSE, flag1 = FALSE, found = FALSE;
 	int  i = 0, n = 0;
-
-	while ((c = getchar()) != EOF)		//пока не будет нажато сочетание Ctrl+z в новой строке, то есть после нажатия на Enter
+	while ((c = getchar()) != EOF)		
 	{
-		if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z')	//проверка является ли символ буквой
+		if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z')	
 		{
-			if (flag1 == FALSE)		//если это первое слово в потоке
+			if (flag1 == FALSE)		
 			{
-				n++;			//количество букв в первом слове
-				flag = TRUE;	//признак нахождения внутри слова
+				n++;			
+				flag = TRUE;	
 			}
-			else	//если не первое слово в потоке
+			else	
 			{
-				i++;			//количество букв в последующем слове
+				i++;			
 				flag = TRUE;
 			}
 		}
-		else	//если символ не буква
+		else	
 		{
-			if (flag == TRUE)	//если только что были внутри слова
+			if (flag == TRUE)	
 			{
-				if (flag1 == FALSE)		//если это было первое слово
+				if (flag1 == FALSE)		
 				{
-					flag1 = TRUE;		//признак прохождения первого слова
+					flag1 = TRUE;		
 				}
-				else	//если не первое слово
+				else	
 				{
-					if (n != i)		//если количество букв в первом и последующем словах разное
+					if (n != i)		
 					{
-						found = TRUE;	//признак неодинаковых слов
+						found = TRUE;	
 					}
 				}
 			}
@@ -45,30 +42,16 @@ int main(void)
 		}
 	}
 	
-	if (found == TRUE)		//если хотя бы одно слово было отличной от других слов длинны
+	if (found == TRUE)		
 	{
-		printf("Words are not the same lenght\n");	//вывод:"слова не одинаковой длинны"
+		printf("Words are not the same lenght\n");	
 	}
-	else		//если все слова были одинаковой длинны
+	else		
 	{
-		printf("Words of the same lenght\n");	//вывод:"слова одинаковой длинны"
+		printf("Words of the same lenght\n");	
 	}
 
 	system("pause");
 	return 0;
-	
 }
 
-int prov (char S[], int m)
-{
-int F,i;
-F=0;
-for (i=0; i<m; i++)
-{
-if ((S[i]<'A' || S[i]<'a' || S[i]>'z'))
-{
-F=1
-}
-}
- return F;
- }
