@@ -1,57 +1,72 @@
 #include <stdio.h>
-#define TRUE 1
-#define FALSE 0
-int main(void)
+#include<string.h>
+int prov(char mass[], int m);
+
+ int main()
 {
-	char c, flag = FALSE, flag1 = FALSE, found = FALSE;
-	int  i = 0, n = 0;
-	while ((c = getchar()) != EOF)		
-	{
-		if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z')	
-		{
-			if (flag1 == FALSE)		
-			{
-				n++;			
-				flag = TRUE;	
-			}
-			else	
-			{
-				i++;			
-				flag = TRUE;
-			}
-		}
-		else	
-		{
-			if (flag == TRUE)	
-			{
-				if (flag1 == FALSE)		
-				{
-					flag1 = TRUE;		
-				}
-				else	
-				{
-					if (n != i)		
-					{
-						found = TRUE;	
-					}
-				}
-			}
-
-			flag = FALSE;
-			i = 0;
+  int pos,c;
+  int i,F,F1,wlen;
+  char s[50];
+  memset(s,'\0',50);
+  F= wlen=F1=0;  
+  for(i=0; (c=s[i]=getchar())!=EOF; i++)
+  {
+  	if(c==' '|| c=='.'||c==','||c=='\t'||c=='\n')
+  	{
+  		F=0;
+  		if (F==1 && prov(s,i) == 0)
+			  printf("%d\n",i);
+			wlen=i;
+  		i=(-1);
+  		memset(s,'\0',50);
+		break;
+  	}
+	    else 
+	    {
+	    	if(F==0){
+	    	F=1;
+	    	pos=i;
+	               }
 		}
 	}
-	
-	if (found == TRUE)		
-	{
-		printf("Words are not the same lenght\n");	
+  printf("%d--\n",wlen);
+  for(i=0; (c=s[i]=getchar())!=EOF; i++)
+  {
+  	if(c==' '|| c=='.'||c==','||c=='\t'||c=='\n')
+  	{
+  		
+  		if (F==1 && prov(s,i) == 0 && wlen != i)
+			F1=1;
+		printf("%d %d\n", F1,i);
+  		i=(-1);
+  		memset(s,'\0',50);
+		F=0;
+  	}
+	    else 
+	    {
+	    	if(F==0)
+	    	F=1;
+		}
+		if (c=='\n')
+		break;
 	}
-	else		
-	{
-		printf("Words of the same lenght\n");	
-	}
-
-	system("pause");
-	return 0;
+  if (F1==0)
+	printf("Words of the same lenght:\n");
+  else
+	  printf("Words are not the same lenght\n");
+  getchar();
+	return 0;	
 }
-
+int prov(char s[], int m)
+{
+	int F,i;
+	F=0;
+	for (i=0; i < m; i++)
+	{
+		if ((s[i]<'A' || s[i]>'Z') && (s[i]<'a' || s[i]>'z'))
+		{
+			F=1;
+		}
+	}
+	return F;
+}
