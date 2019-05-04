@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include<time.h>
+#include<stdlib.h> 
+#define N 5
+#define K 5
+
+main()
+{
+	int s[N][K];
+	int i,j,i1,j1,sum = 0, max = 0,maxi=0,sum1=0;
+	srand(time(NULL));
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<K;j++)
+		{
+			s[i][j]=(rand()%10);
+			printf("%d ",s[i][j]);
+		}
+	printf("\n");
+	}
+	printf("\n");
+	for(j = 0 ; j < K ; j++)
+	{
+		int k;
+		for(i=k=0,i1=N-1-j,j1=j; i < N-j; i++, j1++, i1--,k++)//вычисление суммы элементов диагонали выше главной и побочной
+		{
+			sum1+= s[i1][k];
+			sum+= s[i][j1];
+		}
+		max = (sum1 > max) ? sum1 : max;
+		max = (sum > max) ? sum : max;
+		sum = sum1 = 0;
+		k=0;
+	}
+	for(i = N-1 ; i > -1; i--)
+	{
+		for(i1=i,j=0, j1= K-1; i1 < N; i1++,j++,j1--)//вычисление суммы элементов диагонали ниже главной и побочной диагонали
+		{
+			sum+= s[i1][j1];
+			sum1+= s[i1][j];
+		}
+		max = (sum1 > max) ? sum1 : max;
+		max = (sum > max) ? sum : max;
+		sum = sum1= 0;
+	}
+	printf("%d<<\n",max);
+	for(j = 0 ; j < K ; j++)
+	{
+		int k;
+		for(i=k=0,i1=N-1-j,j1=j; i < N-j; i++, j1++, i1--,k++)//обнуление максимальной диагонали
+		{
+			sum1+= s[i1][k];
+			sum+= s[i][j1];
+		}
+		if (sum1==max)
+		{
+			for(;k > -1; s[i1++][k--]=0);
+			goto a;
+		}	
+		else if(sum==max)
+		{
+			for(;i > -1; s[i--][j1--]=0);
+			goto a;
+		}
+		sum = sum1 = 0;
+		k=0;
+	}
+	for(i = N-1 ; i > -1; i--)
+	{
+		for(i1=i,j=0, j1= K-1; i1 < N; i1++,j++,j1--)//обнуление максимальной диагонали
+		{
+			sum+= s[i1][j1];
+			sum1+= s[i1][j];
+		}
+			if (sum1==max)
+		{
+			for(;j > -1; s[i1--][j--]=0);
+			goto a;
+		}	
+		else if(sum==max)
+		{
+			for(;j1 < K; s[i1--][j1++]=0);
+			goto a;
+		}
+		sum = sum1= 0;
+	}
+	a:
+		for(i=0;i<N;i++)
+	{
+		for(j=0;j<K;j++)
+			printf("%d ",s[i][j]);
+	printf("\n");
+	}
+	return 0;
+}
