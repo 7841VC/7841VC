@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include<string.h>
 int prov(char mass[], int m);
-
  int main()
 {
   int pos,c;
