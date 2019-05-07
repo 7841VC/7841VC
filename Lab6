@@ -3,7 +3,6 @@
 #include<stdlib.h> 
 #define N 5
 #define K 5
-
 main()
 {
 	int s[N][K];
