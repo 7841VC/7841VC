@@ -14,7 +14,7 @@ int prov(char mass[], int m);
   	{
   		F=0;
   		if (F==1 && prov(s,i) == 0)
-			  printf("%d\n",i);
+
 			wlen=i;
   		i=(-1);
   		memset(s,'\0',50);
@@ -28,7 +28,7 @@ int prov(char mass[], int m);
 	               }
 		}
 	}
-  printf("%d--\n",wlen);
+ 
   for(i=0; (c=s[i]=getchar())!=EOF; i++)
   {
   	if(c==' '|| c=='.'||c==','||c=='\t'||c=='\n')
@@ -36,7 +36,7 @@ int prov(char mass[], int m);
   		
   		if (F==1 && prov(s,i) == 0 && wlen != i)
 			F1=1;
-		printf("%d %d\n", F1,i);
+		
   		i=(-1);
   		memset(s,'\0',50);
 		F=0;
