@@ -24,7 +24,7 @@ main()
 			if (F == 1)
 			{
 					wlen=i-pos;
-				if(prv(str,pos,i)==1)
+				if(prv(str,pos,i)==0)
 				{
 					for (k = pos; k <= l; k++)
 						str[k]=str[k+wlen];
@@ -43,19 +43,15 @@ main()
 	puts(str);
 	return 0;
 }
-int prv(char str[], int begin, int end)
-{
-	int F,i,f1;
-	F=f1=0;
-	for (i=begin; i < end; i++)
-	{
-		if ((str[i]>='A' && str[i]<='Z') || (str[i]>='a' && str[i]<='z'))
-			F=1;
-	}
-	for (i=begin; i < end; i++)
-	{
-		if ((str[i]>='0' || str[i]<='9') && F==0)
-			f1=1;
-	}
-	return f1;
+int prv(char str[], int begin, int end) 
+{ 
+int F,i,f1; 
+F=f1=0; 
+for (i=begin; i < end; i++) 
+{ 
+if ((str[i]<'0' || str[i]>'9'))
+f1=1; 
+} 
+return f1; 
+
 }
