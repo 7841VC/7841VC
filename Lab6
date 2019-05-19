@@ -5,7 +5,7 @@
 #define K 5
 main()
 {
-	int s[N][K];
+int s[N][K];
 	int i,j,i1,j1,sum = 0, max = 0,maxi=0,sum1=0;
 	srand(time(NULL));
 	for(i=0;i<N;i++)
