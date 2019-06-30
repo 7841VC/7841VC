@@ -1,0 +1,102 @@
+#include <stdio.h>
+int datest(char [], int , int);
+int tst(char [], char [],int, int);
+int m,day,y;
+int main()
+{
+	FILE *f;
+	FILE *fin;
+	FILE *fin2;
+	int i,perb,perf,fl=0,yc; //period_begin, period_for, flag, year_copy
+    fin2=fopen("F2in.txt","w+");// переменной присваивается указатель на файл 
+	fin = fopen("d11in.txt", "w+");
+	char s1[20];//стиль писателя 
+	char s[1000];// строка с данными писателя 
+	for (i = 'A'; i <= 'Z'; ++i)
+	{
+	    f = fopen("d11.txt", "rt");//каждый раз открывается для поиска писателя с фамилией начинающийся на букву с кодом i
+		while (fgets(s,1000,f)!= NULL)// ñсчитывается каждая строка по одной до конца файла
+		{
+			if (s[0] == i)
+				fprintf(fin, "%s", s);
+		}
+		fclose(f);//закрыть файл f
+	}
+	fclose(fin);// finish firts stage: maked file d11in.txt
+    fin=fopen("d11in.txt","r");// открыть отсортированный по алфавиту файла для чтения 
+    printf("write the period begin and period end through space\n");
+    scanf("%d %d",&perb,&perf);//считывание периода с какой и по какой
+	fprintf(fin2,"In that period: %d - %d, living this writers:\n",perb,perf);
+    while(fgets(s,1000,fin)!=NULL)
+    	{
+    		for(i=0; s[i]!='\0';i++)
+    		{
+    			if(s[i]>='0'&&s[i]<='9'&&datest(s,i,i+10)==1 && fl==0)	// fl отвечает за то, что это первая дата
+				{
+					yc=y;
+					fl=1;
+					i+=10;
+    			}
+    			else if (s[i]>='0'&&s[i]<='9'&&datest(s,i,i+10)==1 && fl==1)//флаг поднят значит уже находилась первая дата
+    			{
+					fl=0;
+					i+=10;
+					if((perb<y && y<perf) || (yc>=perb && y<=perf) || (yc<=perb && y>=perf) || (yc<perf && yc>perb))
+						fprintf(fin2, "%s",s);
+				}
+			}
+			fl=0;
+		}
+	fclose(fin);// finish second stage: maked file F2.txt
+	printf("write nature of creativity would you need:\n");
+	scanf("%s",s1);
+	fprintf(fin2,"\nthat writers have it's stile of write\n");
+	fin=fopen("d11in.txt","r");
+	while(fgets(s,1000,fin)!=NULL)
+	{
+		int pos=0,F=0;
+		for(i = 0; s[i] != '\0'; i++)
+		{
+			if(s[i]=='\n' || s[i]==' '|| s[i]=='.' || s[i]==',' || s[i]=='\t')
+			{
+				if (F == 1)
+				{
+					if(tst(s1,s,pos,i)==0)
+        	           fprintf(fin2,"%s",s);
+				}
+				F = 0;
+			}
+			else if (F==0)
+			{
+				F = 1;
+				pos=i;
+			}
+		}
+	}
+	fclose(fin);// finish third stage: add F2.txt
+    fclose(fin2);
+	return 0;
+}
+int datest(char d[], int begin, int end)//тест на то, что дата корректная + перевод даты в целочисленный тип
+{
+	int F=0;
+	day = (d[begin]-'0') * 10 + (d[begin+1]-'0');
+	m = (d[begin+3]-'0') * 10 + (d[begin+4]-'0');
+	y = (d[end-1]-'0') + (d[end-2]-'0') * 10 + (d[end-3]-'0') * 100 + (d[end-4]-'0')*1000;
+	F = (day >= 1 && day <= 31 && (m==1 || m==3 || m==5 || m==7 || m==8 || m==10 || m==12)&&y>0&&y<2019) ? 1 : F;
+	F = (day >=1 && day <= 30 && (m==4 || m==6 || m==9 || m==11)&&y>0&&y<2019) ? 1 : F;
+	F = ((day >= 1 && day <= 29 && y%4==0 && m==2) ||(day >= 1 && day <= 28 && y%4!=0 && m==2)&&y>0&&y<2019) ? 1 : F;
+	return F;
+}
+int tst(char s1[],char s[], int begin, int end)//проверка соответствия писателя данному стилю s1
+{
+	int j=0,i;
+	int F=0;
+	for(i = begin; i<end; i++)
+	{
+		if(s[i]!=s1[j])
+			F=1;
+		j++;
+	}
+	return F;
+}
