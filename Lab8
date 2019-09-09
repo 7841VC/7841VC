@@ -1,0 +1,59 @@
+#include <stdio.h>
+#define MAXLINE 1000
+int test(char mass[], int begin, int end);
+void mine_process(char line[]);
+int main()
+{
+    char string[MAXLINE];
+    printf("read a string\n");
+    gets(string);
+    mine_process(string);
+    puts(string);
+    return 0;
+}
+void mine_process(char str[])
+{
+	int l,F=0,i,pos,k;
+	char *s_poin=&str[0];
+    for (l=0;*(s_poin+l)!='\0';++l);
+    for(i = 0; i <= l; i++)
+	{
+		if(*(s_poin+i)==' '|| *(s_poin+i)=='.' || *(s_poin+i)==',' || *(s_poin+i)=='\t'||i==l)
+		{
+			if (F == 1)
+			{
+                int wlen=i-pos;
+				if(test(str,pos,i)==0)
+				{
+                    int j; // âûâîä îñíîâíîãî öûêëà 
+                    
+                    for(j=pos; j<=l; j++)
+                        *(s_poin+j)=*(s_poin+j+wlen);
+                    i-=wlen;
+                    l-=wlen;
+				}
+			}
+			F =0;
+		}
+		else if (F==0)
+		{
+			F = 1;
+			pos=i;
+		}
+		else if (F == 1)
+		
+        if(*(s_poin+i)=='\n')
+            break;
+	}
+}
+int test(char str[], int begin, int end)
+{
+	int F=0,i;
+	char *ks=&str[0];
+	for (i=begin; i < end; i++)
+	{
+		if (*(ks+i)<'0' || *(ks+i)>'9')
+			F=1;
+	}
+	return F;
+}
