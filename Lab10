@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <malloc.h>
+#include<string.h>
+
+void copy(char [], char []);//копирование строк
+int tst(char [], char [],int, int);//тест на то, что две функции равны 
+int func_test(char []);//тест на то, что данная строка-функция
+void main_process();
+int main()
+{
+    printf("Existing functions:\n======================================\n");//список функций в программе
+    main_process();
+    return 0;
+}
+int tst(char s1[],char s[], int begin, int end)
+{
+	int j=0,i;
+	int F=0,flag=0;
+	for(i = begin; i<end; i++)
+	{
+		if(s[i]!=s1[j])
+			F=1;//если две функции в какой то момент различаются по символу возвращается 1
+		j++;
+	}
+	return F;
+}
+void main_process()
+{
+    FILE *f;
+    char **func_names;//указатель на указатель(замена двумерному массиву)
+    char string[1000];
+    int i,inc=0,len=0,flag=0,inc_co,j,fl;
+    a:
+    f=fopen("cod1.txt","rt");//открытие файла
+    memset(string,'\0',1000);//отчистка строки от мусора
+    while(fgets(string,1000,f)!=NULL)//получение строки
+    {
+		    if(func_test(string)==0)//если строка-функция
+            {
+                              if(flag == 1)//если проходим по файлу второй раз
+                              {
+                                  for(len=0; string[len]!='\0'; len++);//получение длины 
+                                  func_names[inc]= (char*) calloc(len+1,sizeof(char));//выделение памяти под текущую строку, при этом с заполнением нулями
+                                  copy(string,func_names[inc]);//копирование текущей строки в выделенную память
+                              }
+                              inc++;//счетчик, который считает количество функций в файле 
+            }
+    }
+    fclose(f);//закрыть файл 
+    if(flag==0)//если первый раз обработали файл
+    {
+        func_names = (char**)malloc(inc * sizeof(char*));//выделить память под количество строк
+        inc_co=inc;//копировать количество вызывов функций
+        inc=0;//обнуляем счетчик вызывов функций
+        flag=1;//флаг, который показывает, что мы нашли количество строк, которые надо скопировать
+        goto a;//заход на второй круг
+    }
+    for(i=0;i<inc_co;i++)
+    {
+        for(j=0; func_names[i][j]!='\0'; j++)
+            {
+                if( func_names[i][j]=='m'&&  func_names[i][j+1]=='a' &&  func_names[i][j+2]=='i' &&  func_names[i][j+3]=='n'&&  func_names[i][j+4]=='(')
+                    printf("in main function\n=================================\n");//окончание списка функций в файле
+            }
+        printf("%s",func_names[i]);//вывод дерева вызывов функций
+    }
+    for(i=0;i < inc_co; free(func_names[i]),i++);//освобождение каждой строки в массиве
+    free(func_names);//освобождение самого массива
+}
+void copy(char out[],char in[])
+{
+        int i;
+        for(i=0; out[i]!='\0';i++)
+            in[i]=out[i];
+
+}
+int func_test(char s[])
+{
+    int i,flag_1=0,flag_2=0,flag_3=1,F=0;
+    for(i=0; s[i]!='\0';i++)
+    {
+        flag_1=(s[i]==')')? 1 : flag_1;//если найдена одна скобка
+        flag_2=(s[i]=='(')? 1 : flag_2;//если найдена вторая скобка
+    }
+        for(i=0; s[i]!='\0';i++)
+        {
+            if((s[i]=='f'&&s[i+1]=='o'&& s[i+2]=='r')||
+               (s[i]=='w'&& s[i+1]=='h'&&s[i+2]=='i'&& s[i+3]=='l' &&s[i+4]=='e')||
+               (s[i]=='i'&&s[i+1]=='f'&&(s[i+2]==' '||s[i+2]=='('))||s[i]=='=')//исключить циклы и условный оператор
+                    flag_3=0;
+        }
+        if(flag_1==1 && flag_2==1 && flag_3 == 1)//если соблюдены все условия
+           return 0;
+        else return 1;
+}
