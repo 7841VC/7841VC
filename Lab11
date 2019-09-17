@@ -1,0 +1,47 @@
+#include<stdio.h>
+#include<Windows.h>
+void selection_w(char s[]);//функция выделения получаемой строки
+int tst(char []);//проверка на наличие констатнты в строке
+void read_and_wr_f();//функция для получения строки
+int main()
+{
+    read_and_wr_f();
+    return 0;
+}
+int tst(char s[])
+{
+
+    int i,F=0;
+    for(i=0; s[i]!='\0'; i++)
+    {
+        if(s[i]=='0' && (s[i+1]=='x'||s[i+1]=='X'))//если найдены опозновательные знаки 16сс 
+           F=1;
+    }
+    for(i=0; s[i]!='\0'; i++)
+    {
+        if((s[i]=='c'&&s[i+1]=='o'&&s[i+2]=='n'&&s[i+3]=='s'&&s[i+4]=='t')&&F==1)//если найдено ключевое слово константы const
+            F=2;
+        if((s[i]=='#'&&s[i+1]=='d'&&s[i+2]=='e'&&s[i+3]=='f'&&s[i+4]=='i')&&F==1)//если надйено ключевое слово констаны #define
+            F=2;
+    }
+	return F;
+}
+void selection_w(char s[])
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);//*
+    SetConsoleTextAttribute(hConsole, (WORD) ((15 << 4) | 0));//*изменение поля на белый цвет, цвет шрифта на черный
+    printf("%s",s);//*печать строки
+    SetConsoleTextAttribute(hConsole, (WORD) ((0 << 4) | 7));//*возвращение цвета поля и шрифта в обычный цвет
+    printf(" ");
+}
+void read_and_wr_f()
+{
+    FILE *f=fopen("MT2.txt","rt");//открытие файла
+    char string[1000];
+    while(fgets(string,1000,f)!=NULL)//цикл принятия строки в string
+    {
+					if(tst(string)==2)//если в строке и найдена 16сс, и ключевое слово константы
+        	           selection_w(string);//выделить строку
+        	        else printf("%s",string);//либо просто вывести строку
+    }
+}
