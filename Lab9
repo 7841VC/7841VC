@@ -1,0 +1,62 @@
+#include<stdio.h>
+#define max_long 1000
+
+int prv(char str[], int begin, int end);
+void main()
+{
+     FILE *f_out,*f_in;
+    char str[max_long];
+    int i,max_wlen=-1,longer_w=0,F,pos,wlen=0,flag=0;
+    a:
+    f_out = fopen("MT2.txt","rt");
+    f_in = fopen("LongerWord.txt","w");
+    while(fgets(str,max_long,f_out)!=NULL)
+    {
+        for(i=0; str[i]!='\0';i++)
+        {
+            if(str[i]==' '|| str[i]=='.' || str[i]==',' || str[i]=='\t'|| str[i]=='\n')
+		{
+			if (F == 1)
+			{
+
+				if(prv(str,pos,i)==0 )
+                {
+                    wlen=i-pos;
+                    max_wlen=(wlen>max_wlen) ? wlen : max_wlen;
+                }
+                if(wlen==longer_w)
+                {
+                    fprintf(f_in,"%s",str);
+                    break;
+                }
+			}
+			F =0;
+		}
+		else if (F==0)
+		{
+			F = 1;
+			pos=i;
+		}
+        }
+        pos=wlen=0;
+    }
+    fclose(f_out);
+    fclose(f_in);
+    if(flag==0)
+    {
+        flag=1;
+        longer_w= max_wlen;
+        goto a;
+    }
+}
+int prv(char str[], int begin, int end)
+{
+	int F,i;
+	F=0;
+	for (i=begin; i < end; i++)
+	{
+		if ((str[i]<'A' || str[i]>'Z') && (str[i]<'a' || str[i]>'z'))
+			F=1;
+	}
+	return F;
+}
